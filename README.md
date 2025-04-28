@@ -1,3 +1,5 @@
+- https://www.youtube.com/watch?v=lNd7XlXwlho
+
 # Create project
 
 ```sh
@@ -31,7 +33,11 @@ air  # run project
 - Even Better TOML
 - Thunder Client (~~REST Client~~ | ~~Postman~~)
 
-# Add Todo item
+# Todo
+
+## API without DB
+
+Add todo
 
 ```go
 
@@ -65,6 +71,7 @@ func main() {
 	})
 
 	app.Post("/api/todo", func(c fiber.Ctx) error {
+		// todo := new(Todo)
 		todo := &Todo{}
 
 		if err := c.Bind().JSON(todo); err != nil {
@@ -92,4 +99,49 @@ Run:
 ```sh
 > curl -X POST -H "Content-Type: application/json" --data "{\"body\":\"hello world\"}" localhost:3000/api/todo
 {"id":1,"completed":false,"body":"hello world"}
+```
+
+Get Todo list
+
+```go
+	// Get Todos
+	app.Get("/api/todo", func(c fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(todos)
+	}
+```
+
+Update Todo
+
+```go
+	// Update a Todo
+	app.Patch("/api/todo/:id", func(c fiber.Ctx) error {
+		id := c.Params("id")
+
+		for i, todo := range todos {
+			if fmt.Sprint(todo.ID) == id {
+				todos[i].Completed = !todo.Completed
+				return c.Status(fiber.StatusOK).JSON(todos[i])
+			}
+		}
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Todo not found"})
+	})
+
+```
+
+Delete a Todo
+
+```go
+
+	// Delete a Todo
+	app.Delete("/api/todo/:id", func(c fiber.Ctx) error {
+		id := c.Params("id")
+
+		for i, todo := range todos {
+			if fmt.Sprint(todo.ID) == id {
+				todos = append(todos[:i], todos[i+1:]...)
+				return c.Status(fiber.StatusOK).JSON(fiber.Map{"success": true})
+			}
+		}
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Todo not found"})
+	})
 ```

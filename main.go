@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v3"
@@ -27,7 +28,14 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"msg": "Hello, World 👋!"})
 	})
 
+	// Get Todos
+	app.Get("/api/todo", func(c fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(todos)
+	})
+
+	// Create a Todo
 	app.Post("/api/todo", func(c fiber.Ctx) error {
+		// todo := new(Todo)
 		todo := &Todo{}
 
 		if err := c.Bind().JSON(todo); err != nil {
@@ -42,6 +50,32 @@ func main() {
 		todos = append(todos, *todo)
 
 		return c.Status(fiber.StatusCreated).JSON(todo)
+	})
+
+	// Update a Todo
+	app.Patch("/api/todo/:id", func(c fiber.Ctx) error {
+		id := c.Params("id")
+
+		for i, todo := range todos {
+			if fmt.Sprint(todo.ID) == id {
+				todos[i].Completed = !todo.Completed
+				return c.Status(fiber.StatusOK).JSON(todos[i])
+			}
+		}
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Todo not found"})
+	})
+
+	// Delete a Todo
+	app.Delete("/api/todo/:id", func(c fiber.Ctx) error {
+		id := c.Params("id")
+
+		for i, todo := range todos {
+			if fmt.Sprint(todo.ID) == id {
+				todos = append(todos[:i], todos[i+1:]...)
+				return c.Status(fiber.StatusOK).JSON(fiber.Map{"success": true})
+			}
+		}
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Todo not found"})
 	})
 
 	// Start the server on port 3000
