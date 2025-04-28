@@ -9,13 +9,18 @@ cd go-react-tutorial
 go mod init github.com/keer2345/go-react-tutorial
 ```
 
+## Modules
+
+- fiber
+- godotenv
+- air
+
 ### fiber
 
 ⚡️ Express inspired web framework written in Go
 
 ```sh
 go get -u github.com/gofiber/fiber/v3
-
 ```
 
 ### air-verse/air
@@ -32,6 +37,32 @@ air  # run project
 
 - Even Better TOML
 - Thunder Client (~~REST Client~~ | ~~Postman~~)
+
+## Config environment
+
+```sh
+go get github.com/joho/godotenv
+touch .env
+```
+
+file of `.env`:
+
+```sh
+PORT=5000
+```
+
+```go
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	PORT := os.Getenv("PORT")
+
+	// ...
+
+	log.Fatal(app.Listen(":" + PORT))
+```
 
 # Todo
 
