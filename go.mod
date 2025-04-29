@@ -5,8 +5,14 @@ go 1.24.1
 require go.mongodb.org/mongo-driver v1.17.3
 
 require (
+	github.com/gofiber/utils v0.0.10 // indirect
+	github.com/gorilla/schema v1.1.0 // indirect
+)
+
+require (
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.8.0 // indirect
+	github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/fiber/v3 v3.0.0-beta.4 // indirect
 	github.com/gofiber/schema v1.3.0 // indirect
 	github.com/gofiber/utils/v2 v2.0.0-beta.8 // indirect
