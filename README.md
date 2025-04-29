@@ -1,6 +1,6 @@
 - https://www.youtube.com/watch?v=lNd7XlXwlho
 
-# Create project
+# Create GO Project
 
 ```sh
 mkdir go-react-tutorial
@@ -186,3 +186,13 @@ https://www.mongodb.com/zh-cn/docs/drivers/go/current/fundamentals/connections/c
 ```sh
 go get go.mongodb.org/mongo-driver/v2/mongo
 ```
+
+# Client Project
+
+```sh
+mkdir client
+cd client
+npm create vite@latest .
+```
+
+Choose `react` --> `Typescript`.
