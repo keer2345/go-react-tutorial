@@ -196,3 +196,43 @@ npm create vite@latest .
 ```
 
 Choose `react` --> `Typescript`.
+
+Add [chakra-ui](https://chakra-ui.com). ([Installation](https://chakra-ui.com/docs/get-started/installation))
+
+```sh
+npm i @chakra-ui/react @emotion/react @chakra-ui/cli
+npx @chakra-ui/cli snippet add
+```
+
+```sh
+npm install path
+npm install react-icons --save
+```
+
+## Configure
+
+`vite.config.ts`:
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
+```
+
+`tsconfig.json`:
+
+```ts
+"paths": {
+  "@/*": ["./src/*"]
+}
+```
