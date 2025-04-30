@@ -1,16 +1,17 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { Container, Stack } from "@chakra-ui/react";
+import Navbar from "./components/custom/Navbar";
+import TodoForm from "./components/custom/TodoForm";
 
 function App() {
   return (
     <>
-      <HStack wrap="wrap" gap="6">
-        <Button variant="solid">Solid</Button>
-        <Button variant="subtle">Subtle</Button>
-        <Button variant="surface">Surface</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="plain">Plain</Button>
-      </HStack>
+      <Stack h="100vh">
+        <Navbar />
+        <Container>
+          <TodoForm />
+          {/* <TodoList /> */}
+        </Container>
+      </Stack>
     </>
   );
 }
