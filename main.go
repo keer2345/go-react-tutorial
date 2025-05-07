@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -66,6 +67,7 @@ func main() {
 
 	// Initialize a new Fiber app
 	app := fiber.New()
+	app.Use(cors.New())
 
 	// todos := []Todo{}
 	app.Get("/api/todo", getTodos)

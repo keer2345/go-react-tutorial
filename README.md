@@ -205,7 +205,7 @@ npx @chakra-ui/cli snippet add
 ```
 
 ```sh
-npm install react-icons --save
+npm install react-icons @tanstack/react-query --save
 npm i -D vite-tsconfig-paths
 ```
 
