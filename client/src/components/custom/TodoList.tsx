@@ -3,6 +3,7 @@ import { BASE_URL } from "@/App";
 import { Flex, Spinner, Stack, Text } from "@chakra-ui/react";
 import useSWR from "swr";
 import axios from "axios";
+import TodoItem from "./TodoItem";
 
 export type Todo = {
   _id: number;
@@ -11,7 +12,7 @@ export type Todo = {
 };
 
 // const fetcher = (url) => fetch(url).then((r) => r.json());
-const fetcher = (url) => axios.get(url).then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const TodoList = () => {
   const {
@@ -21,6 +22,7 @@ const TodoList = () => {
   } = useSWR<Todo[]>(BASE_URL + "/todo", fetcher);
 
   console.log("v1", todos);
+  console.log("v2", error);
 
   return (
     <>
@@ -34,25 +36,31 @@ const TodoList = () => {
       >
         Today's Tasks
       </Text>
-      {isLoading && (
-        <Flex justifyContent={"center"} my={4}>
-          <Spinner size={"xl"} />
-        </Flex>
+      {error && (
+        <Text alignItems={"center"} color={"red"}>
+          {error.message}
+        </Text>
       )}
-      {!isLoading && todos?.length == 0 && (
-        <Stack alignItems={"center"} gap="3">
-          <Text fontSize={"xl"} textAlign={"center"} color={"gray.500"}>
-            All tasks completed! 🤞
-          </Text>
-          <img src="/go.png" alt="Go logo" width={70} height={70} />
-        </Stack>
+      {!error && (
+        <>
+          {isLoading && (
+            <Flex justifyContent={"center"} my={4}>
+              <Spinner size={"xl"} />
+            </Flex>
+          )}
+          {!isLoading && todos?.length == 0 && (
+            <Stack alignItems={"center"} gap="3">
+              <Text fontSize={"xl"} textAlign={"center"} color={"gray.500"}>
+                All tasks completed! 🤞
+              </Text>
+              <img src="/go.png" alt="Go logo" width={70} height={70} />
+            </Stack>
+          )}
+          <Stack gap={3}>
+            {todos?.map((todo) => <TodoItem key={todo._id} todo={todo} />)}
+          </Stack>
+        </>
       )}
-      <Stack gap={3}>
-        {todos?.map((todo) => (
-          <Text>{todo.body}</Text>
-          // <TodoItem key={todo._id} todo={todo} />
-        ))}
-      </Stack>
     </>
   );
 };
