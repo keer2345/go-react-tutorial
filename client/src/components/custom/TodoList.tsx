@@ -21,9 +21,6 @@ const TodoList = () => {
     isLoading,
   } = useSWR<Todo[]>(BASE_URL + "/todo", fetcher);
 
-  console.log("v1", todos);
-  console.log("v2", error);
-
   return (
     <>
       <Text
